@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">AirQuality</string>
+
+    <string name="site_name">測站名稱</string>
+    <string name="county">縣市</string>
+    <string name="aqi">空氣品質指標</string>
+    <string name="pollutant">空氣污染指標物</string>
+    <string name="status">狀態</string>
+    <string name="so2">二氧化硫(ppb)</string>
+    <string name="co">一氧化碳(ppm)</string>
+    <string name="co_every8hr">一氧化碳8小時移動平均(ppm)</string>
+    <string name="o3">臭氧(ppb</string>
+    <string name="o3_every8hr">臭氧8小時移動平均(ppb)</string>
+    <string name="pm10">懸浮微粒(μg/m3)</string>
+    <string name="pm2dot5">細懸浮微粒(μg/m3)</string>
+    <string name="no2">二氧化氮(ppb)</string>
+    <string name="nox">氮氧化物(ppb)</string>
+    <string name="no">一氧化氮(ppb)</string>
+    <string name="wind_speed">風速(m/sec)</string>
+    <string name="wind_direc">風向(degrees)</string>
+    <string name="publish_time">資料建置日期</string>
+    <string name="pm2dot5_avg">細懸浮微粒移動平均值(μg/m3)</string>
+    <string name="pm10_avg">懸浮微粒移動平均值(μg/m3)</string>
+    <string name="so2_avg">二氧化硫移動平均值(ppb)</string>
+    <string name="longitude">經度</string>
+    <string name="latitude">緯度</string>
+</resources>

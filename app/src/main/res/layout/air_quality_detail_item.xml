@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+    <TextView
+            android:text="@string/site_name"
+            android:id="@+id/air_quality_item_site_name_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/county"
+            android:id="@+id/air_quality_item_county_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/aqi"
+            android:id="@+id/air_quality_item_aqi_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/pollutant"
+            android:id="@+id/air_quality_item_pollutant_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/status"
+            android:id="@+id/air_quality_item_status_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/so2"
+            android:id="@+id/air_quality_item_so2_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/co"
+            android:id="@+id/air_quality_item_co_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/co_every8hr"
+            android:id="@+id/air_quality_item_co_every8hr_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/o3"
+            android:id="@+id/air_quality_item_o3_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/o3_every8hr"
+            android:id="@+id/air_quality_item_o3_every8hr_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/pm10"
+            android:id="@+id/air_quality_item_pm10_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/pm2dot5"
+            android:id="@+id/air_quality_item_pm2dot5_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/no2"
+            android:id="@+id/air_quality_item_no2_text_view"
+            style="@style/air_quality_value_style"/>
+    <TextView
+            android:text="@string/nox"
+            android:id="@+id/air_quality_item_nox_text_view"
+            style="@style/air_quality_value_style"/>
+    <TextView
+            android:text="@string/no"
+            android:id="@+id/air_quality_item_no_text_view"
+            style="@style/air_quality_value_style"/>
+    <TextView
+            android:text="@string/wind_speed"
+            android:id="@+id/air_quality_item_wind_speed_text_view"
+            style="@style/air_quality_value_style"/>
+    <TextView
+            android:text="@string/wind_direc"
+            android:id="@+id/air_quality_item_wind_direc_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/publish_time"
+            android:id="@+id/air_quality_item_publish_time_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/pm2dot5_avg"
+            android:id="@+id/air_quality_item_pm2dot5_avg_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/pm10_avg"
+            android:id="@+id/air_quality_item_pm10_avg_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/so2_avg"
+            android:id="@+id/air_quality_item_so2_avg_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/longitude"
+            android:id="@+id/air_quality_item_longitude_text_view"
+            style="@style/air_quality_value_style"/>
+
+    <TextView
+            android:text="@string/latitude"
+            android:id="@+id/air_quality_item_latitude_text_view"
+            style="@style/air_quality_value_style"/>
+</LinearLayout>

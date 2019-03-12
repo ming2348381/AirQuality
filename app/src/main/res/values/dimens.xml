@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="air_quality_value_width">110dp</dimen>
+    <dimen name="air_quality_value_margin_right">10dp</dimen>
+</resources>
