@@ -12,6 +12,9 @@ public class ApiInfo<T> implements Serializable {
         mParameter = parameter;
     }
 
+    public ApiInfo(Class<T> responseClass) {
+        mResponseClass = responseClass;
+    }
 
     public Class<T> getResponseClass() {
         return mResponseClass;

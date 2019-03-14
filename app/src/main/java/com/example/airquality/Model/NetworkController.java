@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
-import com.example.airquality.Utils.DatabaseUtil;
 import com.example.airquality.Utils.GsonHelper;
 import com.example.airquality.Utils.okHttpUtil;
 import com.example.airquality.View.MainApplication;
@@ -16,6 +16,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONTokener;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.lang.annotation.ElementType;
@@ -30,12 +32,15 @@ import static com.example.airquality.Model.NetworkController.RequestType.GET;
 public class NetworkController {
     public static final String KEY_API_INFO = "apiInfo";
     public static final String INTENT_ACTION = "api_request";
+    public static final String INTENT_ACTION_CRAWLER = "crawler_request";
+
 
     private BroadcastReceiver mBroadcastReceiver;
 
     public void registerReceiver(Context context) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(INTENT_ACTION);
+        intentFilter.addAction(INTENT_ACTION_CRAWLER);
         mBroadcastReceiver = new ApiBroadcastReceiver();
         context.registerReceiver(mBroadcastReceiver, intentFilter);
     }
@@ -51,8 +56,15 @@ public class NetworkController {
         @Override
         public void onReceive(Context context, Intent intent) {
             ApiInfo apiInfo = (ApiInfo) intent.getSerializableExtra(KEY_API_INFO);
-            if (apiInfo != null) {
-                get(apiInfo.getResponseClass(), apiInfo.getParameter());
+            switch (intent.getAction()) {
+                case INTENT_ACTION:
+                    if (apiInfo != null) {
+                        get(apiInfo.getResponseClass(), apiInfo.getParameter());
+                    }
+                    break;
+                case INTENT_ACTION_CRAWLER:
+                    new Crawler().execute(apiInfo);
+                    break;
             }
         }
     }
@@ -175,4 +187,47 @@ public class NetworkController {
     public static class EmptyResponse {
 
     }
+
+    private static class Crawler extends AsyncTask<ApiInfo, Object, Void> {
+        @Override
+        protected Void doInBackground(ApiInfo... apiInfos) {
+            Class className = apiInfos[0].getResponseClass();
+            ApiRequest apiRequest = (ApiRequest) className.getAnnotation(ApiRequest.class);
+            Document document = loadDocument(apiRequest.path());
+            if (document != null) {
+                onSuccess(document, className, apiRequest.path());
+            }
+            return null;
+        }
+
+        private Document loadDocument(String url) {
+            Document document = null;
+            try {
+                document = Jsoup.connect(url)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return document;
+        }
+
+        private void onSuccess(Document data, Class className, String broadcastAction) {
+            Object object;
+            try {
+                object = className.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            if (object instanceof DocumentParseable && object instanceof DatabaseStorable) {
+                ((DocumentParseable) object).parseDocument(data);
+                ((DatabaseStorable) object).setObjectToDatabase();
+                MainApplication.getAppContext().sendBroadcast(new Intent().setAction(broadcastAction));
+            }
+        }
+    }
+
+
 }

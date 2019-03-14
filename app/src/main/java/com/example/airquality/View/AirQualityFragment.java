@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.airquality.Adapter.AirQualityAdapter;
 import com.example.airquality.Model.AirQuality.AirQualitys;
-import com.example.airquality.Model.ApiInfo;
 import com.example.airquality.Presenter.AirQualityPresenter;
 import com.example.airquality.R;
 import com.example.airquality.Utils.DialogUtil;
@@ -63,12 +62,18 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
     private void initView() {
         mDetailRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mDetailRecyclerView.setAdapter(mAirQualityAdapter);
+        mAirQualityPresenter.loadDailyQuote();
         mAirQualityPresenter.loadAirQualityData();
     }
 
     @Override
     public void updateAirQualityData(AirQualitys airQualitys) {
         mAirQualityAdapter.setItems(airQualitys);
+    }
+
+    @Override
+    public void updateDailyQuote(String dailyQuote) {
+        mDailyQuote.setText(dailyQuote);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.airquality.Model.AirQuality;
+import com.example.airquality.Model.DailyQuote;
 import com.example.airquality.View.MainApplication;
 import com.example.airquality.annotation.SqliteDataAnnotation;
 import com.example.airquality.annotation.SqliteTableAnnotation;
@@ -19,7 +20,7 @@ public class DatabaseUtil extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static DatabaseUtil mInstance;
 
-    private Class<?>[] mListClass = new Class<?>[]{AirQuality.class};
+    private Class<?>[] mListClass = new Class<?>[]{AirQuality.class, DailyQuote.class};
 
     private DatabaseUtil() {
         super(MainApplication.getAppContext(), DATABASE_NAME, null, DATABASE_VERSION);
