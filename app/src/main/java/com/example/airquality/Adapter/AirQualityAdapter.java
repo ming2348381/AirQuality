@@ -33,7 +33,7 @@ public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mAirQualitys.size();
+        return mAirQualitys == null ? 0 : mAirQualitys.size();
     }
 
     public void setItems(AirQualitys airQualitys) {
@@ -68,7 +68,13 @@ public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         private DetailViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnLongClickListener(mAirQualityView.deleteAirQualityItem(getAdapterPosition()));
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mAirQualityView.deleteAirQualityItem(getAdapterPosition());
+                    return false;
+                }
+            });
             mSiteNameTextView = itemView.findViewById(R.id.air_quality_item_site_name_text_view);
             mCountyTextView = itemView.findViewById(R.id.air_quality_item_county_text_view);
             mAQITextView = itemView.findViewById(R.id.air_quality_item_aqi_text_view);

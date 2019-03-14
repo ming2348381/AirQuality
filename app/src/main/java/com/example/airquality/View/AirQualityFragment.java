@@ -1,6 +1,6 @@
 package com.example.airquality.View;
 
-import android.content.DialogInterface;
+import android.content.*;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.airquality.Adapter.AirQualityAdapter;
 import com.example.airquality.Model.AirQuality.AirQualitys;
+import com.example.airquality.Model.ApiInfo;
 import com.example.airquality.Presenter.AirQualityPresenter;
 import com.example.airquality.R;
 import com.example.airquality.Utils.DialogUtil;
@@ -23,6 +24,7 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
 
     private AirQualityPresenter mAirQualityPresenter;
     private AirQualityAdapter mAirQualityAdapter;
+    private ApiBroadcastReceiver mBroadcastReceiver;
 
     @Nullable
     @Override
@@ -39,6 +41,18 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
 
         initDate();
         initView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        registerReceiver();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unregisterReceiver();
     }
 
     private void initDate() {
@@ -58,18 +72,36 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
     }
 
     @Override
-    public View.OnLongClickListener deleteAirQualityItem(final int position) {
-        return new View.OnLongClickListener() {
+    public void deleteAirQualityItem(final int position) {
+        DialogUtil.showDialog(getContext(), R.string.delete_item, new DialogInterface.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                DialogUtil.showDialog(getContext(), R.string.delete_item, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mAirQualityPresenter.deleteAirQualityData(position);
-                    }
-                });
-                return false;
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mAirQualityPresenter.deleteAirQualityData(position);
             }
-        };
+        });
     }
+
+    public void registerReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        for (String action : mAirQualityPresenter.getFilterActions()) {
+            intentFilter.addAction(action);
+        }
+        mBroadcastReceiver = new ApiBroadcastReceiver();
+        getContext().registerReceiver(mBroadcastReceiver, intentFilter);
+    }
+
+    public void unregisterReceiver() {
+        if (mBroadcastReceiver != null) {
+            getContext().unregisterReceiver(mBroadcastReceiver);
+            mBroadcastReceiver = null;
+        }
+    }
+
+    private class ApiBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mAirQualityPresenter.ApiBroadcastReceiver(intent.getAction());
+        }
+    }
+
 }

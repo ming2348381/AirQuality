@@ -5,5 +5,5 @@ import com.example.airquality.Model.AirQuality.AirQualitys;
 
 public interface AirQualityView {
     void updateAirQualityData(AirQualitys airQuality);
-    OnLongClickListener deleteAirQualityItem(int position);
+    void deleteAirQualityItem(int position);
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.util.Log;
+import com.example.airquality.Utils.DatabaseUtil;
 import com.example.airquality.Utils.GsonHelper;
 import com.example.airquality.Utils.okHttpUtil;
 import com.example.airquality.View.MainApplication;
@@ -28,8 +29,7 @@ import static com.example.airquality.Model.NetworkController.RequestType.GET;
 
 public class NetworkController {
     public static final String KEY_API_INFO = "apiInfo";
-
-    private static final String INTENT_ACTION = "api_request";
+    public static final String INTENT_ACTION = "api_request";
 
     private BroadcastReceiver mBroadcastReceiver;
 
@@ -59,10 +59,10 @@ public class NetworkController {
 
     private <T> void get(Class<T> tClass, Map<String, String> parameter) {
         ApiRequest apiRequest = tClass.getAnnotation(ApiRequest.class);
-        executeApi(GET, getRequestUrl(apiRequest, parameter), apiRequest.get(), TimeoutType.DEFAULT, apiRequest.certificate());
+        executeApi(GET, getRequestUrl(apiRequest, parameter), apiRequest.path(), apiRequest.get(), TimeoutType.DEFAULT, apiRequest.certificate());
     }
 
-    private <T> void executeApi(RequestType requestType, final String requestUrl, final Class responseClass, TimeoutType timeoutType, String certificate) {
+    private <T> void executeApi(RequestType requestType, final String requestUrl, final String broadcastAction, final Class responseClass, TimeoutType timeoutType, String certificate) {
         int timeout = timeoutType.getMilliseconds();
 
         okHttpUtil.getTrustClient(certificate).newBuilder().connectTimeout(timeout, TimeUnit.MILLISECONDS).readTimeout(timeout, TimeUnit.MILLISECONDS).writeTimeout(timeout, TimeUnit.MILLISECONDS)
@@ -97,7 +97,10 @@ public class NetworkController {
             }
 
             private void onSuccess(final T data) {
-
+                if (data instanceof DatabaseStorable) {
+                    ((DatabaseStorable) data).setObjectToDatabase();
+                    MainApplication.getAppContext().sendBroadcast(new Intent().setAction(broadcastAction));
+                }
             }
 
             private void onFailed() {
