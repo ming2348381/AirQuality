@@ -1,5 +1,6 @@
 package com.example.airquality.View;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.example.airquality.Adapter.AirQualityAdapter;
 import com.example.airquality.Model.AirQuality.AirQualitys;
 import com.example.airquality.Presenter.AirQualityPresenter;
 import com.example.airquality.R;
+import com.example.airquality.Utils.DialogUtil;
 
 public class AirQualityFragment extends Fragment implements AirQualityView {
     private TextView mDailyQuote;
@@ -41,7 +43,7 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
 
     private void initDate() {
         mAirQualityPresenter = new AirQualityPresenter(this);
-        mAirQualityAdapter = new AirQualityAdapter();
+        mAirQualityAdapter = new AirQualityAdapter(this);
     }
 
     private void initView() {
@@ -53,5 +55,21 @@ public class AirQualityFragment extends Fragment implements AirQualityView {
     @Override
     public void updateAirQualityData(AirQualitys airQualitys) {
         mAirQualityAdapter.setItems(airQualitys);
+    }
+
+    @Override
+    public View.OnLongClickListener deleteAirQualityItem(final int position) {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                DialogUtil.showDialog(getContext(), R.string.delete_item, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAirQualityPresenter.deleteAirQualityData(position);
+                    }
+                });
+                return false;
+            }
+        };
     }
 }

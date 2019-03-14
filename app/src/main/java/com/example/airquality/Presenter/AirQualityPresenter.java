@@ -14,4 +14,8 @@ public class AirQualityPresenter {
         //Todo temp data
         mAirQualityView.updateAirQualityData(new AirQualitys());
     }
+
+    public void deleteAirQualityData(int position){
+        //Todo implement
+    }
 }
