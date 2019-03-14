@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+
 public class AirQuality {
+    @NetworkController.ApiRequest(get = AirQualitys.class, path = "https://opendata.epa.gov.tw/api/v1/AQI", certificate = "tw_gov.cer")
     public static class AirQualitys extends ArrayList<AirQuality> {
 
     }
@@ -129,5 +131,34 @@ public class AirQuality {
 
     public String getLatitude() {
         return Latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "AirQuality{" +
+                "SiteName='" + SiteName + '\'' +
+                ", County='" + County + '\'' +
+                ", AQI='" + AQI + '\'' +
+                ", Pollutant='" + Pollutant + '\'' +
+                ", Status='" + Status + '\'' +
+                ", SO2='" + SO2 + '\'' +
+                ", CO='" + CO + '\'' +
+                ", COEvery8hr='" + COEvery8hr + '\'' +
+                ", O3='" + O3 + '\'' +
+                ", O3Every8hr='" + O3Every8hr + '\'' +
+                ", PM10='" + PM10 + '\'' +
+                ", PM2Dot5='" + PM2Dot5 + '\'' +
+                ", NO2='" + NO2 + '\'' +
+                ", NOx='" + NOx + '\'' +
+                ", NO='" + NO + '\'' +
+                ", WindSpeed='" + WindSpeed + '\'' +
+                ", WindDirec='" + WindDirec + '\'' +
+                ", PublishTime='" + PublishTime + '\'' +
+                ", PM2Dot5Avg='" + PM2Dot5Avg + '\'' +
+                ", PM10Avg='" + PM10Avg + '\'' +
+                ", SO2Avg='" + SO2Avg + '\'' +
+                ", Longitude='" + Longitude + '\'' +
+                ", Latitude='" + Latitude + '\'' +
+                '}';
     }
 }
