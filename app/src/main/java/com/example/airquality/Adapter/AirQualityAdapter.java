@@ -9,10 +9,16 @@ import android.widget.TextView;
 import com.example.airquality.Model.AirQuality;
 import com.example.airquality.Model.AirQuality.AirQualitys;
 import com.example.airquality.R;
+import com.example.airquality.View.AirQualityView;
 import com.example.airquality.View.BaseViewHolder;
 
 public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private AirQualitys mAirQualitys;
+    private AirQualityView mAirQualityView;
+
+    public AirQualityAdapter(AirQualityView airQualityView) {
+        mAirQualityView = airQualityView;
+    }
 
     @NonNull
     @Override
@@ -22,12 +28,12 @@ public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        holder.bindViewHolder(mAirQualitys.get(position));
+        holder.onBindViewHolder(mAirQualitys.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mAirQualitys.size();
+        return mAirQualitys == null ? 0 : mAirQualitys.size();
     }
 
     public void setItems(AirQualitys airQualitys) {
@@ -62,7 +68,13 @@ public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         private DetailViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mAirQualityView.deleteAirQualityItem(getAdapterPosition());
+                    return false;
+                }
+            });
             mSiteNameTextView = itemView.findViewById(R.id.air_quality_item_site_name_text_view);
             mCountyTextView = itemView.findViewById(R.id.air_quality_item_county_text_view);
             mAQITextView = itemView.findViewById(R.id.air_quality_item_aqi_text_view);
@@ -89,7 +101,7 @@ public class AirQualityAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void bindViewHolder(AirQuality data) {
+        public void onBindViewHolder(AirQuality data) {
             mSiteNameTextView.setText(data.getSiteName());
             mCountyTextView.setText(data.getCounty());
             mAQITextView.setText(data.getAQI());

@@ -9,7 +9,6 @@
     <TextView
             tools:text="Daily quote"
             android:id="@+id/air_quality_fragment_daily_quote_text_view"
-            android:textSize="32sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

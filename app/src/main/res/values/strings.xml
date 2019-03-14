@@ -24,4 +24,7 @@
     <string name="so2_avg">二氧化硫移動平均值(ppb)</string>
     <string name="longitude">經度</string>
     <string name="latitude">緯度</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">取消</string>
+    <string name="delete_item">刪除此項目嗎？</string>
 </resources>

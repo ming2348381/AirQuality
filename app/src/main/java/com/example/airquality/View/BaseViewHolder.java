@@ -8,5 +8,6 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public abstract void bindViewHolder(T data);
+
+    public abstract void onBindViewHolder(T data);
 }
